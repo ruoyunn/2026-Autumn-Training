@@ -158,4 +158,30 @@ main()
 ```
 <img width="226" height="93" alt="image" src="https://github.com/user-attachments/assets/fea0fc84-ac7b-4823-aed6-7673f469fd4e" />
 
+经过漫长的往下翻，可以发现此处不再是简单的输出字符了
+
+.text:0000000000002D4C                 cmp     [rbp+var_4], 0
+
+.text:0000000000002D50                 jz      loc_2FE5
+
+
+也就是：
+
+变量等于 0 → 跳到 2FE5
+
+变量不等于 0 → 继续执行 2D56
+
+<img width="343" height="116" alt="image" src="https://github.com/user-attachments/assets/fead9dd2-2a46-418a-bf44-2c6724b7ae97" />
+
+跳到2FE5可以看到，逐个输出了字符you did't find the flag
+
+<img width="379" height="410" alt="image" src="https://github.com/user-attachments/assets/6c9d12db-d54e-4692-8d1a-9a297e69319e" />
+
+所以我们重点看一下2D56后面的
+
+<img width="332" height="410" alt="image" src="https://github.com/user-attachments/assets/4a18cbf1-6205-4c0d-9408-12fc6e540d63" />
+
+可以看到flag出来了：GFCTF{u_are2wordy}，但是题目平台要求前缀改为NSSCTF，所以最终flag为NSSCTF{u_are2wordy}
+
+<img width="830" height="491" alt="image" src="https://github.com/user-attachments/assets/354222fb-cc14-4042-bc44-b9a4c30a4350" />
 
