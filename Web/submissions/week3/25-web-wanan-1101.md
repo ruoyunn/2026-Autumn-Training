@@ -3,12 +3,12 @@
 ---
 
 ## 一、[NSSCTF 2021新生赛]gift_F12
+
 ### 解题思路
 
-1. 开启环境，访问题目页面。页面是一个带倒计时的"礼物页"，文字提示"10月23日0点flag将会出现"，**这是陷阱**，倒计时日期早过完了，等再久也不会
+1. 开启环境，访问题目页面。页面是一个带倒计时的"礼物页"，文字提示"10月23日0点flag将会出现"，**这是陷阱**，倒计时日期早过完了，等再久也不会出。
 
 2. 题目名里的 `gift_F12` 是明示：按 `F12` 打开开发者工具，控制台里全是浏览器噪音报错（404、跨域、自动播放拦截），没有人工痕迹。
-
 
 3. `Ctrl + U` 查看网页源代码，逐段翻。第 1 行注释就在嘲讽：`<!--你都不愿意等我的礼物，真让人伤心-->`；第 134 行 JS 里直接定义了 flag：
 
@@ -16,7 +16,8 @@
 flag = "WLLMCTF{We1c0me_t0_WLLMCTF_Th1s_1s_th3_G1ft}"//flag is here
 ```
 
-![源码中的flag](![alt text](image-1.png))
+<img width="535" height="330" alt="image-1" src="https://github.com/user-attachments/assets/2f3c7ff9-4b3c-402f-ac29-b3add6485f0e" />
+
 
 ### 踩坑
 
@@ -44,7 +45,7 @@ NSSCTF{We1c0me_t0_WLLMCTF_Th1s_1s_th3_G1ft}
 
 ### 解题思路
 
-1. 页面只有一句提示：**"规范的站点应当正确配置 robots.txt"**——出题人直接把钥匙递过来了。
+1. 页面只有一句提示：**"规范的站点应当正确配置 robots.txt"**
 
 2. robots.txt 按惯例固定放在网站根目录，直接访问：
 
@@ -52,13 +53,18 @@ NSSCTF{We1c0me_t0_WLLMCTF_Th1s_1s_th3_G1ft}
 challenge.qsnctf.com:60213/robots.txt
 ```
 
-![robots.txt内容](![alt text](image-2.png))![alt text](image-3.png)![alt text]![alt text](image-5.png)(image-4.png)
+![robots.txt内容](images/image-2.png)
 
 3. 内容翻译：网站有 3 个"不想让爬虫收录"的页面——`/login.php`、`/admin.php`、`/secret.php`。对爬虫是禁令，对攻击者是**藏宝图**：写了 Disallow 的地方就是真实存在、又被故意"藏起来"的地方。
 
+<img width="527" height="290" alt="image-3" src="https://github.com/user-attachments/assets/4b1f3ec6-a2ee-4247-a553-d86affa0f95a" />
+<img width="536" height="287" alt="image-2" src="https://github.com/user-attachments/assets/1ce0894f-b053-489c-b68c-3195a937ce7f" />
+
+
 4. 逐个访问三个路径，在 secret.php 里找到 flag。
 
-![找到flag]![alt text](image-7.png)
+<img width="486" height="263" alt="image-4" src="https://github.com/user-attachments/assets/43b94f72-4df4-4310-945e-0a5b9bb23ced" />
+
 
 ### 收获
 
@@ -86,7 +92,8 @@ if ($moe == "flag") {
 }
 ```
 
-![源码]![alt text](image-8.png)
+<img width="529" height="244" alt="image-6" src="https://github.com/user-attachments/assets/2b66d55b-ad92-4fd7-9ac6-3a2fd1060e86" />
+
 
 2. **逐行翻译**：服务器说，只要你用 GET 方式传参数 `moe=flag`，我就把真 flag 打印给你。第一次打开页面看到源码，是因为没传参数走了 else 分支——"菜单"就是谜面。
 
@@ -96,7 +103,8 @@ if ($moe == "flag") {
 原网址/?moe=flag
 ```
 
-![得到flag]![alt text](image-9.png)
+<img width="520" height="257" alt="image-5" src="https://github.com/user-attachments/assets/0304a22f-fb68-4601-a430-80aa844e55cc" />
+
 
 4. 浏览器发出的请求实际是：
 
@@ -120,11 +128,9 @@ NSSCTF{57500cab-3f64-4ace-8a69-dc863367f705}
 
 ---
 
-## 二，学习笔记
-# Web 基础三件套：HTML / JS / HTTP
+## 四、学习笔记：Web 基础三件套（HTML / JS / HTTP）
 
-
-# 1、HTML：网页的骨架
+### 1、HTML：网页的骨架
 
 **是什么**：超文本标记语言，描述网页上"有什么东西"。浏览器读它来画页面。
 
@@ -166,7 +172,7 @@ NSSCTF{57500cab-3f64-4ace-8a69-dc863367f705}
 2. `<input type="hidden">` 隐藏输入框，藏了密码或 flag
 3. 前端写的"禁止提交"逻辑，直接改源码或改包绕过——**前端限制都是纸糊的**
 
-## 2、JS：网页的动作
+### 2、JS：网页的动作
 
 **是什么**：JavaScript，网页的脚本语言，让页面"动起来"：弹窗、倒计时、表单校验都是它。
 
@@ -199,7 +205,7 @@ NSSCTF{57500cab-3f64-4ace-8a69-dc863367f705}
 3. **JS 混淆**：代码被压缩成一坨乱码（eval、加密字符串），用 F12 控制台直接执行或在线解混淆
 4. `console.log` 里可能藏着出题人故意打印的话——控制台不只看报错
 
-## 3、HTTP：浏览器和网站的对话
+### 3、HTTP：浏览器和网站的对话
 
 **是什么**：浏览器和服务器之间通信的协议。一次通信 = 一个**请求** + 一个**响应**。
 
@@ -267,6 +273,7 @@ curl -v -X POST http://example.com/login \
 
 > `-v` 显示完整请求响应 | `-X` 指定方法 | `-H` 加请求头 | `-d` 请求体
 
-## 4、三者的关系一句话
+### 4、三者的关系一句话
 
 HTML 是骨架（有什么），JS 是动作（干什么），HTTP 是运输（怎么把东西送到你浏览器）。**做题心法：页面上的一切都是从 HTTP 送来的 HTML/JS 源码——前端藏的东西，等于已经交到你手里。**
+<img width="535" height="330" alt="image-1" src="https://github.com/user-attachments/assets/6c7cfbbc-0447-42b4-bf64-95803d7d6442" />
